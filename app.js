@@ -1,4 +1,5 @@
-const socket = io("https://basic-chat-back-end-production.up.railway.app/");
+// const socket = io("https://basic-chat-back-end-production.up.railway.app/");
+const socket = io("ws://localhost:8000");
 
 const msgInput = document.querySelector("#message");
 const nameInput = document.querySelector("#name");
@@ -42,6 +43,18 @@ msgInput.addEventListener("keypress", () => {
 socket.on("message", (data) => {
   activity.textContent = "";
   const { name, text, time } = data;
+
+  // Format date to local time
+  let options = {
+    // year: "numeric",
+    // month: "long",
+    // day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    // second: "2-digit",
+  };
+  const formattedTimeString = new Date(time).toLocaleDateString("en-US", options);
+
   const li = document.createElement("li");
   li.className = "post";
   if (name === nameInput.value) li.className = "post post--left";
@@ -52,7 +65,7 @@ socket.on("message", (data) => {
       name === nameInput.value ? "post__header--user" : "post__header--reply"
     }">
         <span class="post__header--name">${name}</span> 
-        <span class="post__header--time">${time}</span> 
+        <span class="post__header--time">${formattedTimeString}</span> 
         </div>
         <div class="post__text">${text}</div>`;
   } else {
