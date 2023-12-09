@@ -1,4 +1,4 @@
-const socket = io("ws://basic-chat-back-end-production.up.railway.app/");
+const socket = io("https://basic-chat-back-end-production.up.railway.app/");
 
 const msgInput = document.querySelector("#message");
 const nameInput = document.querySelector("#name");
